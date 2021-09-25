@@ -12,6 +12,7 @@ public class SpawnShapes : MonoBehaviour
     [SerializeField]
     public Dictionary<string, Button> buttons = new Dictionary<string, Button>();
     private Signs formeButton;
+    private GameObject previousShape;
 
     private void Awake()
     {
@@ -48,26 +49,29 @@ public class SpawnShapes : MonoBehaviour
 
     public void SpawnShape(Signs forme)
     {
-        formeButton = forme;
-        //spawn la forme
-        //
-        GameObject newShape = Instantiate(forme.gameObject, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, (Camera.main.transform.position.y - 0.25f))), Quaternion.identity, null);
-        
-        //décompte de l'inventaire
-        inventaire[forme.name] -= 1;
+        if (!Manipulation.AnObjectIsHold)
+        {
+            formeButton = forme;
+            //spawn la forme
+            GameObject newShape = Instantiate(forme.gameObject, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, (Camera.main.transform.position.y - 0.25f))), Quaternion.identity, null);
 
-        //gérer le cas où plus de formes de ce ype = désactiver bouton
+            //décompte de l'inventaire
+            inventaire[forme.name] -= 1;
 
+            previousShape = newShape;
+        }
     }
 
     public void UpdateText(Button button)
     {
-        Text text = button.transform.GetComponentInChildren<Text>();
-        text.text = "x " + inventaire[formeButton.name];
-        if(inventaire[formeButton.name] <= 0)
+        if (!Manipulation.AnObjectIsHold)
         {
-            button.interactable = false;
+            Text text = button.transform.GetComponentInChildren<Text>();
+            text.text = "x " + inventaire[formeButton.name];
+            if (inventaire[formeButton.name] <= 0)
+            {
+                button.interactable = false;
+            }
         }
     }
-
 }

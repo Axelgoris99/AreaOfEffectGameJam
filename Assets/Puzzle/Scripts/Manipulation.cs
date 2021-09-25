@@ -8,7 +8,8 @@ public class Manipulation : MonoBehaviour
     private Color originalColor;
     private bool isClicked = false;
     public Camera mainCamera;
-    private static bool anObjectIsHold = false;
+    [SerializeField]
+    public static bool AnObjectIsHold;
     
     private void Awake()
     {
@@ -26,7 +27,7 @@ public class Manipulation : MonoBehaviour
     void Start()
     {
         //quand la pièce est générée depuis l'inventaire, elle est cliquée
-        anObjectIsHold = true;
+        AnObjectIsHold = true;
         isClicked = true;
         StartCoroutine("FollowMouse");
     }
@@ -44,17 +45,17 @@ public class Manipulation : MonoBehaviour
         //Debug.Log("world" + mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 4)));
         if(Input.GetMouseButtonDown(0))
         {
-            if(!anObjectIsHold)
+            if(!AnObjectIsHold)
             {
                 StartCoroutine("FollowMouse");
                 isClicked = true;
-                anObjectIsHold = true;
+                AnObjectIsHold = true;
             }
             else if(isClicked)
             {
                 StopCoroutine("FollowMouse");
                 isClicked = false;
-                anObjectIsHold = false;
+                AnObjectIsHold = false;
             }
         }
     }
@@ -75,5 +76,10 @@ public class Manipulation : MonoBehaviour
             transform.position = newPosition;
             yield return null;
         }        
+    }
+
+    public void setHold(bool boolean)
+    {
+        AnObjectIsHold = boolean;
     }
 }
