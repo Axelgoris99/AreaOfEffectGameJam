@@ -8,6 +8,7 @@ public class Manipulation : MonoBehaviour
     private Color originalColor;
     private bool isClicked = false;
     public Camera mainCamera;
+    private static bool anObjectIsHold = false;
     
     private void Awake()
     {
@@ -34,15 +35,17 @@ public class Manipulation : MonoBehaviour
         //Debug.Log("world" + mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 4)));
         if(Input.GetMouseButtonDown(0))
         {
-            if(!isClicked)
+            if(!anObjectIsHold)
             {
                 StartCoroutine("FollowMouse");
                 isClicked = true;
+                anObjectIsHold = true;
             }
-            else
+            else if(isClicked)
             {
                 StopCoroutine("FollowMouse");
                 isClicked = false;
+                anObjectIsHold = false;
             }
         }
     }
@@ -61,7 +64,6 @@ public class Manipulation : MonoBehaviour
         {
             Vector3 newPosition = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, (mainCamera.transform.position.y - transform.position.y)));
             transform.position = newPosition;
-            Debug.Log(newPosition);
             yield return null;
         }        
     }
