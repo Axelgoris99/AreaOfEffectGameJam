@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Signs : MonoBehaviour
 {
+    public static List<Signs> capturedSigns = new List<Signs>();
+    public static spawnEnemy spawnCount;
     [SerializeField]
     private int health;
     [SerializeField]
@@ -24,7 +26,10 @@ public class Signs : MonoBehaviour
     public void SetHealth(int value)
     {
         health = Mathf.Max(value, 0);
-        gameObject.SetActive(health > 1);  
+        if(health == 0)
+        {
+            DestructionSign();
+        }
     }
 
     public int Probability
@@ -44,5 +49,19 @@ public class Signs : MonoBehaviour
     public string SignName
     {
         get { return signName; }
+    }
+
+    private void Start()
+    {
+        if (spawnCount == null)
+        {
+            spawnCount = GameObject.FindGameObjectWithTag("Spawn").GetComponent<spawnEnemy>();
+        }
+    }
+
+    public void DestructionSign() {
+        capturedSigns.Add(this);
+        spawnCount.NbOfEnemy = spawnCount.NbOfEnemy - 1;
+        Destroy(gameObject);
     }
 }

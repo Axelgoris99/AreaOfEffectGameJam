@@ -70,5 +70,13 @@ public class moveAI : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, transform.position + newDirection, speed * Time.deltaTime);
         oldDirection = newDirection;
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.layer == LayerMask.NameToLayer("Walls"))
+        {
+            nextRotation = new Vector3(0, 0, 180);
+            speed *= 1.2f;
+        }
+    }
 
 }

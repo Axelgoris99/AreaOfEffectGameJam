@@ -17,6 +17,12 @@ public class spawnEnemy : MonoBehaviour
     [SerializeField]
     private int nbOfEnemy;
 
+    public int NbOfEnemy
+    {
+        get { return nbOfEnemy; }
+        set { nbOfEnemy = value; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
