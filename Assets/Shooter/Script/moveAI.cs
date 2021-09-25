@@ -14,6 +14,6 @@ public class moveAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(aimContext.DecidedDirection);
+        transform.position = Vector3.MoveTowards(transform.position, aimContext.DecidedDirection, 0.1f);
     }
 }
