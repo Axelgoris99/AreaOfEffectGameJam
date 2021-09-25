@@ -7,9 +7,10 @@ public class time : MonoBehaviour
     [SerializeField]
     private spawnEnemy spawn;
 
+    [SerializeField]
     int timePassed = 0;
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         StartCoroutine(TimeFlies());
     }

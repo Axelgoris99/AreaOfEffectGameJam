@@ -23,7 +23,7 @@ public class moveAI : MonoBehaviour
     int count = 0;
     Vector3 nextRotation = new Vector3();
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         aimContext = GetComponent<AIMContext>();
         oldDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
@@ -47,6 +47,11 @@ public class moveAI : MonoBehaviour
             angleRotation.Add(-add);
         }
         count = angleRotation.Count;
+        
+    }
+
+    private void OnEnable()
+    {
         StartCoroutine(NextDirection());
     }
 

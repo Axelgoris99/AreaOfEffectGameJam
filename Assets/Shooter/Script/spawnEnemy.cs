@@ -36,7 +36,7 @@ public class spawnEnemy : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         int count = formToSpawn.Length;
         
@@ -57,7 +57,10 @@ public class spawnEnemy : MonoBehaviour
             possibleSpawnPoint.Add(spawnRight);
             possibleSpawnPoint.Add(spawnUp);
         }
+    }
 
+    private void OnEnable()
+    {
         StartCoroutine(SpawnEnemy());
         StartCoroutine(SpawnUniqueEnemy());
     }
@@ -87,15 +90,18 @@ public class spawnEnemy : MonoBehaviour
         int count = possibleSpawnPoint.Count;
         while (true)
         {
-            Vector3 spawnPoint = possibleSpawnPoint[Random.Range(0, count)];
-            GameObject toSpawn = uniqueFormToSpawn[uniqueFormCounter].Sign;
-            GameObject spawned = Instantiate(toSpawn, spawnPoint, new Quaternion(0, 0, 0, 0));
+            if (uniqueFormCounter < uniqueFormToSpawn.Length)
+            {
+                Vector3 spawnPoint = possibleSpawnPoint[Random.Range(0, count)];
+                GameObject toSpawn = uniqueFormToSpawn[uniqueFormCounter].Sign;
+                GameObject spawned = Instantiate(toSpawn, spawnPoint, new Quaternion(0, 0, 0, 0));
 
-            moveUniqueEnemy move = spawned.AddComponent<moveUniqueEnemy>();
-            move.Speed = Random.value * 5;
+                moveUniqueEnemy move = spawned.AddComponent<moveUniqueEnemy>();
+                move.Speed = Random.value * 5;
 
-            nbOfEnemy += 1;
-            uniqueFormCounter++;
+                nbOfEnemy += 1;
+                uniqueFormCounter++;
+            }
             yield return new WaitForSeconds(10f);
         }
     }

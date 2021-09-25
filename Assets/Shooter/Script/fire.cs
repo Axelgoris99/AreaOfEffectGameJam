@@ -9,7 +9,7 @@ public class fire : MonoBehaviour
     float heat;
     bool overHeat;
     // Update is called once per frame
-    private void Start()
+    private void OnEnable()
     {
         StartCoroutine("Fire");
         StartCoroutine("Cooldown");
