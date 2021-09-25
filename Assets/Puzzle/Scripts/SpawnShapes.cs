@@ -7,22 +7,21 @@ public class SpawnShapes : MonoBehaviour
     public Color gizmosColor = new Color(0.5f, 0.5f, 0.5f, 0.2f);
     public List<Signs> collectedShapes = new List<Signs>();
     private Vector3 range;
-    private Dictionary<string, int> inventaire;
+    private Dictionary<string, int> inventaire = new Dictionary<string, int>();
 
     private void Awake()
     {
-        //range = transform.localScale / 2;
-        //foreach(Signs sign in collectedShapes)
-        //{
-        //    Vector3 randomRange = new Vector3(Random.Range(-range.x, range.x),
-        //                                      Random.Range(-range.y, range.y),
-        //                                      Random.Range(-range.z, range.z));
-        //    GameObject newGO = Instantiate(sign.Sign.gameObject, transform.position + randomRange, transform.rotation, null);
-        //    if(!newGO.TryGetComponent<Manipulation>(out Manipulation manip))
-        //    {
-        //        newGO.AddComponent<Manipulation>();
-        //    }
-        //}
+        foreach(Signs sign in collectedShapes)
+        {
+            if(inventaire.ContainsKey(sign.name))
+            {
+                inventaire[sign.name] += 1;
+            }
+            else
+            {
+                inventaire.Add(sign.name, 1);
+            }
+        }
     }
 
     // Start is called before the first frame update
