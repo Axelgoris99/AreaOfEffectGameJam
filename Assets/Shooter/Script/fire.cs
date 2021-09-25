@@ -1,0 +1,67 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class fire : MonoBehaviour
+{
+    [SerializeField]
+    GameObject ammo;
+    float heat;
+    bool overHeat;
+    // Update is called once per frame
+    private void Start()
+    {
+        StartCoroutine("Fire");
+        StartCoroutine("Cooldown");
+    }
+
+    private void Update()
+    {
+        if (heat > 1f)
+        {
+            overHeat = true;
+        }
+        if(overHeat && heat < 0)
+        {
+            overHeat = false;
+        }
+    }
+    IEnumerator Cooldown()
+    {
+        while (true)
+        {
+            if (heat > 0 && overHeat)
+            {
+                heat -= 0.03f;
+            }
+            if(heat > 0 && !Input.GetButton("Fire1") && !overHeat)
+            {
+                heat -= 0.05f;
+            }
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+    IEnumerator Fire()
+    {
+        bool rightCanon = true;
+        while (true)
+        {
+            if (Input.GetButton("Fire1") && !overHeat)
+            {
+                GameObject newAmmo;
+                if (rightCanon)
+                {
+                   newAmmo = Instantiate(ammo, transform.position + new Vector3(0.5f, 0.975f, 0f), new Quaternion(0, 0, 0, 0));
+                    
+                }
+                else {
+                    newAmmo = Instantiate(ammo, transform.position + new Vector3(-0.5f, 0.975f, 0f), new Quaternion(0, 0, 0, 0));
+                }
+                newAmmo.SetActive(true);
+                rightCanon = !rightCanon;
+                heat += 0.1f;
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+}
