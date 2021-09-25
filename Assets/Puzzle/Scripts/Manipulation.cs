@@ -53,7 +53,7 @@ public class Manipulation : MonoBehaviour
                 isClicked = true;
                 AnObjectIsHold = true;
             }
-            else if(isClicked)
+            else if(isClicked && !isIntersecting)
             {
                 StopCoroutine("FollowMouse");
                 isClicked = false;
@@ -106,6 +106,20 @@ public class Manipulation : MonoBehaviour
         if (other.bounds.Intersects(this.GetComponent<Collider>().bounds))
         {
             material.color = Color.red;
+            isIntersecting = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        isIntersecting = false;
+        if(isClicked)
+        {
+            material.color = Color.yellow;
+        }
+        else
+        {
+            material.color = originalColor;
         }
     }
 }
