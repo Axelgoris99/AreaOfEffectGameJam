@@ -12,7 +12,7 @@ public class move : MonoBehaviour
     void Update()
     {
         Vector3 translation = new Vector3(Input.GetAxis("Horizontal") * Time.deltaTime * speedX, Input.GetAxis("Vertical") * Time.deltaTime * speedY, 0);
-        transform.Translate(translation);
+        transform.Translate(translation, Space.World);
         
         if(transform.position.x < -13.4)
         {
@@ -30,5 +30,10 @@ public class move : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, 6.92f, 0);
         }
+
+        Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
+        Vector3 dir = Input.mousePosition - pos;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle -90f, Vector3.forward);
     }
 }

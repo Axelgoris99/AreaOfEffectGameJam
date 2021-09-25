@@ -51,11 +51,10 @@ public class fire : MonoBehaviour
                 GameObject newAmmo;
                 if (rightCanon)
                 {
-                   newAmmo = Instantiate(ammo, transform.position + new Vector3(0.5f, 0.975f, 0f), new Quaternion(0, 0, 0, 0));
-                    
+                    newAmmo = Instantiate(ammo, transform.position + transform.rotation * new Vector3(0.5f, 0.975f, 0f), transform.rotation);
                 }
                 else {
-                    newAmmo = Instantiate(ammo, transform.position + new Vector3(-0.5f, 0.975f, 0f), new Quaternion(0, 0, 0, 0));
+                    newAmmo = Instantiate(ammo, transform.position + transform.rotation * new Vector3(-0.5f, 0.975f, 0f) , transform.rotation);
                 }
                 newAmmo.SetActive(true);
                 rightCanon = !rightCanon;

@@ -9,10 +9,7 @@ public class ammoMoveForward : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(0, Time.deltaTime * speed, 0);    
-        if(transform.position.y > 15)
-        {
-            Destroy(gameObject);
-        }
+        transform.position += transform.up * Time.deltaTime * speed;
+
     }
 }

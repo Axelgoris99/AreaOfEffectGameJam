@@ -10,6 +10,13 @@ public class spawnEnemy : MonoBehaviour
     Signs[] UniqueFormToSpawn;
     List<Vector3> possibleSpawnPoint = new List<Vector3>();
     List<int> probability = new List<int>();
+
+    [SerializeField]
+    private int nbMaxOfEnemy;
+
+    [SerializeField]
+    private int nbOfEnemy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,15 +48,19 @@ public class spawnEnemy : MonoBehaviour
         int count = possibleSpawnPoint.Count;
         while (true)
         {
-            Vector3 spawnPoint = possibleSpawnPoint[Random.Range(0, count)];
-            GameObject toSpawn = formToSpawn[probability[Random.Range(0, probability.Count)]].Sign;
-            Instantiate(toSpawn, spawnPoint, new Quaternion(0,0,0,0));
+            if (nbOfEnemy < nbMaxOfEnemy)
+            {
+                Vector3 spawnPoint = possibleSpawnPoint[Random.Range(0, count)];
+                GameObject toSpawn = formToSpawn[probability[Random.Range(0, probability.Count)]].Sign;
+                GameObject spawned = Instantiate(toSpawn, spawnPoint, new Quaternion(0, 0, 0, 0));
+                
+                moveAI move = spawned.AddComponent<moveAI>();
+                move.Speed = Random.value * 5;
+
+                nbOfEnemy += 1;
+            }
             yield return new WaitForSeconds(1f);
         }
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
