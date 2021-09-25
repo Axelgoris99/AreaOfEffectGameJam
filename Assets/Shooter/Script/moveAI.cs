@@ -61,7 +61,12 @@ public class moveAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(speed > 5)
+        {
+            speed = 5;
+        }
         newDirection = Quaternion.Euler(nextRotation) * oldDirection;
+        nextRotation = new Vector3(0, 0, 0);
         newDirection.Normalize();
         if(aimContext.DecidedValues[0] > 0.1f)
         {

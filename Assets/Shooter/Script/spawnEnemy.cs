@@ -65,7 +65,7 @@ public class spawnEnemy : MonoBehaviour
 
                 nbOfEnemy += 1;
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
         }
     }
 
