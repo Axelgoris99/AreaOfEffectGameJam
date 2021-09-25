@@ -51,19 +51,23 @@ public class SpawnShapes : MonoBehaviour
         formeButton = forme;
         //spawn la forme
         //
-        //
+        GameObject newShape = Instantiate(forme.gameObject, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, (Camera.main.transform.position.y - 0.25f))), Quaternion.identity, null);
+        
         //décompte de l'inventaire
         inventaire[forme.name] -= 1;
-        //update le compte texte sur le bouton
-        //Text text = buttons[forme.name].transform.GetComponentInChildren<Text>();
-        //text.text = "x " + inventaire[forme.name];
 
         //gérer le cas où plus de formes de ce ype = désactiver bouton
+
     }
 
-    public void UpdateText(Text text)
+    public void UpdateText(Button button)
     {
+        Text text = button.transform.GetComponentInChildren<Text>();
         text.text = "x " + inventaire[formeButton.name];
+        if(inventaire[formeButton.name] <= 0)
+        {
+            button.interactable = false;
+        }
     }
 
 }

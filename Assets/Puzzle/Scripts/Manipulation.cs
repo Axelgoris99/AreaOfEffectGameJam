@@ -18,13 +18,17 @@ public class Manipulation : MonoBehaviour
         if(mainCamera==null)
         {
             mainCamera = Camera.main;
+
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        //quand la pièce est générée depuis l'inventaire, elle est cliquée
+        anObjectIsHold = true;
+        isClicked = true;
+        StartCoroutine("FollowMouse");
     }
 
     // Update is called once per frame
