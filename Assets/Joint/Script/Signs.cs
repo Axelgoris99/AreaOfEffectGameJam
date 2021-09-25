@@ -12,6 +12,9 @@ public class Signs : MonoBehaviour
     private int score;
     [SerializeField]
     private int probability;
+
+    [SerializeField]
+    private string signName;
     public int Health
     {
         get { return health; }
@@ -38,4 +41,8 @@ public class Signs : MonoBehaviour
         get { return sign; }
     }
 
+    public string SignName
+    {
+        get { return signName; }
+    }
 }

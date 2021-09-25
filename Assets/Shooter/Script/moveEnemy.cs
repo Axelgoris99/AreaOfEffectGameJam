@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class moveEnemy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    public static GameObject playerShip;
 
+    private void Start()
+    {
+        if(playerShip == null)
+        {
+             playerShip = GameObject.FindGameObjectWithTag("Player");
+        }
+    }
     // Update is called once per frame
     void Update()
     {
