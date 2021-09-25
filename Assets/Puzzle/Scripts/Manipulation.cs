@@ -14,6 +14,11 @@ public class Manipulation : MonoBehaviour
     {
         material = GetComponent<Renderer>().material;
         originalColor = material.color;
+
+        if(mainCamera==null)
+        {
+            mainCamera = Camera.main;
+        }
     }
 
     // Start is called before the first frame update
