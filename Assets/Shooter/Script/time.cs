@@ -18,7 +18,6 @@ public class time : MonoBehaviour
     {
         while (true)
         {
-            print(timePassed);
             timePassed++;
             if(timePassed % 10 == 0)
             {
