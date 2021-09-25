@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class time : MonoBehaviour
 {
+    [SerializeField]
+    private spawnEnemy spawn;
+
     int timePassed = 0;
     // Start is called before the first frame update
     void Start()
@@ -17,6 +20,11 @@ public class time : MonoBehaviour
         {
             print(timePassed);
             timePassed++;
+            if(timePassed % 10 == 0)
+            {
+                spawn.TimeForSpawn = spawn.TimeForSpawn - 0.1f;
+                spawn.NbMaxOfEnemy = spawn.NbMaxOfEnemy+1;
+            }
             yield return new WaitForSeconds(1f);
         }
     }

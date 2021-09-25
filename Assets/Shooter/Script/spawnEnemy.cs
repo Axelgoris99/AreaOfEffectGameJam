@@ -7,13 +7,18 @@ public class spawnEnemy : MonoBehaviour
     [SerializeField]
     Signs[] formToSpawn;
     [SerializeField]
-    Signs[] UniqueFormToSpawn;
+    Signs[] uniqueFormToSpawn;
+    int uniqueFormCounter = 0;
     List<Vector3> possibleSpawnPoint = new List<Vector3>();
     List<int> probability = new List<int>();
 
     [SerializeField]
     private int nbMaxOfEnemy;
-
+    public int NbMaxOfEnemy
+    {
+        get { return nbMaxOfEnemy; }
+        set { nbMaxOfEnemy = value; }
+    }
     [SerializeField]
     private int nbOfEnemy;
 
@@ -21,6 +26,13 @@ public class spawnEnemy : MonoBehaviour
     {
         get { return nbOfEnemy; }
         set { nbOfEnemy = value; }
+    }
+
+    private float timeForSpawn = 2.0f;
+    public float TimeForSpawn
+    {
+        get { return timeForSpawn; }
+        set { timeForSpawn = value; }
     }
 
     // Start is called before the first frame update
@@ -47,6 +59,7 @@ public class spawnEnemy : MonoBehaviour
         }
 
         StartCoroutine(SpawnEnemy());
+        StartCoroutine(SpawnUniqueEnemy());
     }
 
     IEnumerator SpawnEnemy()
@@ -65,8 +78,25 @@ public class spawnEnemy : MonoBehaviour
 
                 nbOfEnemy += 1;
             }
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(timeForSpawn);
         }
     }
 
+    IEnumerator SpawnUniqueEnemy()
+    {
+        int count = possibleSpawnPoint.Count;
+        while (true)
+        {
+            Vector3 spawnPoint = possibleSpawnPoint[Random.Range(0, count)];
+            GameObject toSpawn = uniqueFormToSpawn[uniqueFormCounter].Sign;
+            GameObject spawned = Instantiate(toSpawn, spawnPoint, new Quaternion(0, 0, 0, 0));
+
+            moveUniqueEnemy move = spawned.AddComponent<moveUniqueEnemy>();
+            move.Speed = Random.value * 5;
+
+            nbOfEnemy += 1;
+            uniqueFormCounter++;
+            yield return new WaitForSeconds(10f);
+        }
+    }
 }
