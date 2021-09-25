@@ -10,6 +10,8 @@ public class Manipulation : MonoBehaviour
     public Camera mainCamera;
     [SerializeField]
     public static bool AnObjectIsHold;
+    private float limitPenetration = 0.1f;
+    private bool isIntersecting = false;
     
     private void Awake()
     {
@@ -73,13 +75,37 @@ public class Manipulation : MonoBehaviour
         while(true)     //just to try
         {
             Vector3 newPosition = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, (mainCamera.transform.position.y - transform.position.y)));
-            transform.position = newPosition;
+            //transform.position = newPosition;
+            transform.position = new Vector3(newPosition.x, 0.25f, newPosition.z);
             yield return null;
         }        
     }
 
-    public void setHold(bool boolean)
+    private void OnCollisionStay(Collision collision)
     {
-        AnObjectIsHold = boolean;
+        List<ContactPoint> listPoints = new List<ContactPoint>();
+        float interdistance = 0f;
+        collision.GetContacts(listPoints);
+        Debug.Log("nbre points collision "+listPoints.Count);
+        foreach(ContactPoint contact in listPoints)
+        {
+            Debug.Log(contact.separation);
+            if (contact.separation < interdistance)
+            {
+                interdistance = contact.separation;
+            }
+        }
+        if(-interdistance > limitPenetration)
+        {
+            material.color = Color.red;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.bounds.Intersects(this.GetComponent<Collider>().bounds))
+        {
+            material.color = Color.red;
+        }
     }
 }
