@@ -35,7 +35,7 @@ public class ScreenshotCamera : MonoBehaviour
         if (takeScreenshot)
         {
             //take screenshot :
-            actualLetterScreen = new RenderTexture(Screen.width, Screen.height, (int)camera.depth);
+            actualLetterScreen = new RenderTexture(camera.scaledPixelWidth, camera.scaledPixelHeight, (int)camera.depth);
             RenderTexture.active = actualLetterScreen;
             camera.targetTexture = actualLetterScreen;
             camera.Render();            
@@ -89,12 +89,13 @@ public class ScreenshotCamera : MonoBehaviour
     IEnumerator InitializeWhite()
     {
         yield return new WaitForEndOfFrame();
-        emptyLetterScreen = new RenderTexture(Screen.width, Screen.height, (int)camera.depth);
+        emptyLetterScreen = new RenderTexture(camera.scaledPixelWidth, camera.scaledPixelHeight, (int)camera.depth);
+        emptyLetterScreen.Create();
         camera.targetTexture = emptyLetterScreen;
         camera.Render();
 
         Texture2D textureScreen = new Texture2D(emptyLetterScreen.width, emptyLetterScreen.height);
-        Rect rectReadPicture = new Rect(0, 0, emptyLetterScreen.width-1, emptyLetterScreen.height-1);
+        Rect rectReadPicture = new Rect(0, 0, emptyLetterScreen.width, emptyLetterScreen.height);
         RenderTexture.active = emptyLetterScreen;
 
         yield return new WaitForSeconds(0.5f);
