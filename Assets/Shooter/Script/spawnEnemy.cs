@@ -80,6 +80,7 @@ public class spawnEnemy : MonoBehaviour
                 move.Speed = Random.value * 5;
 
                 nbOfEnemy += 1;
+
             }
             yield return new WaitForSeconds(timeForSpawn);
         }

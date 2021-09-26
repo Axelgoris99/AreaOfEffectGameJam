@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Hero : MonoBehaviour
 {
+    [SerializeField]
+    ParticleSystem system;
     AudioSource explode;
     [SerializeField]
     private GameObject gameManager;
@@ -36,6 +38,8 @@ public class Hero : MonoBehaviour
                 break;
             }
         }
+
+
     }
 
     public void EndGame()
@@ -49,6 +53,7 @@ public class Hero : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             SetHealth(health - 1);
+            system.Play();
         }
     }
 }

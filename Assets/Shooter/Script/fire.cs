@@ -9,6 +9,7 @@ public class fire : MonoBehaviour
     float heat;
     bool overHeat;
     AudioSource laserBeam;
+
     void Start()
     {
         AudioSource[] lasers = GetComponents<AudioSource>();

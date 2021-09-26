@@ -21,6 +21,9 @@ public class Signs : MonoBehaviour
     [SerializeField]
     private AudioClip explosionSound;
     AudioSource explosion;
+
+    [SerializeField]
+    private ParticleSystem explosionEffect;
     public int Health
     {
         get { return health; }
@@ -70,12 +73,13 @@ public class Signs : MonoBehaviour
         capturedSigns.Add(this);
         spawnCount.NbOfEnemy = spawnCount.NbOfEnemy - 1;
         explosion.Play();
+        explosionEffect.Play();
         StartCoroutine(Destruction());
     }
     IEnumerator Destruction()
     {
         //yield return new WaitWhile(() =>explosion.isPlaying );
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.4f);
         Destroy(gameObject);
     }
 }
