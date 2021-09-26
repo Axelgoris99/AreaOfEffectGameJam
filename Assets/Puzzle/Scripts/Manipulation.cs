@@ -10,10 +10,10 @@ public class Manipulation : MonoBehaviour
     public Camera mainCamera;
     [SerializeField]
     public static bool AnObjectIsHold;
-    private float limitPenetration = 0.1f;
     private bool isIntersecting = false;
     [SerializeField]
     private ScreenshotCamera scriptCalculWhite;
+    public float offset = 0f;
     
     private void Awake()
     {
@@ -89,7 +89,7 @@ public class Manipulation : MonoBehaviour
         {
             Vector3 newPosition = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, (mainCamera.transform.position.y - transform.position.y)));
             //transform.position = newPosition;
-            transform.position = new Vector3(newPosition.x, 0.25f, newPosition.z);
+            transform.position = new Vector3(newPosition.x, 0.25f + offset, newPosition.z); ;
             yield return null;
         }        
     }
