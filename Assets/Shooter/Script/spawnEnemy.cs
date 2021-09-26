@@ -77,6 +77,7 @@ public class spawnEnemy : MonoBehaviour
                 Vector3 spawnPoint = possibleSpawnPoint[Random.Range(0, count)];
                 GameObject toSpawn = formToSpawn[probability[Random.Range(0, probability.Count)]].Sign;
                 GameObject spawned = Instantiate(toSpawn, spawnPoint, new Quaternion(0, 0, 0, 0));
+                spawned.transform.rotation = toSpawn.transform.rotation;
                 spawned.transform.parent = shooter.transform;
                 moveAI move = spawned.AddComponent<moveAI>();
                 move.Speed = Random.value * 5;
