@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class fire : MonoBehaviour
 {
     [SerializeField]
@@ -9,6 +9,8 @@ public class fire : MonoBehaviour
     float heat;
     bool overHeat;
     AudioSource laserBeam;
+
+    public Slider reload;
 
     void Start()
     {
@@ -39,6 +41,11 @@ public class fire : MonoBehaviour
         {
             overHeat = false;
         }
+        if(heat < 0)
+        {
+            heat = 0;
+        }
+        reload.value = heat;
     }
     IEnumerator Cooldown()
     {
