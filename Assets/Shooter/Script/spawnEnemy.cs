@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class spawnEnemy : MonoBehaviour
 {
+    public GameObject shooter;
+
     [SerializeField]
     Signs[] formToSpawn;
     [SerializeField]
@@ -75,7 +77,7 @@ public class spawnEnemy : MonoBehaviour
                 Vector3 spawnPoint = possibleSpawnPoint[Random.Range(0, count)];
                 GameObject toSpawn = formToSpawn[probability[Random.Range(0, probability.Count)]].Sign;
                 GameObject spawned = Instantiate(toSpawn, spawnPoint, new Quaternion(0, 0, 0, 0));
-                
+                spawned.transform.parent = shooter.transform;
                 moveAI move = spawned.AddComponent<moveAI>();
                 move.Speed = Random.value * 5;
 
@@ -99,7 +101,7 @@ public class spawnEnemy : MonoBehaviour
 
                 moveUniqueEnemy move = spawned.AddComponent<moveUniqueEnemy>();
                 move.Speed = Random.value * 5;
-
+                spawned.transform.parent = shooter.transform;
                 nbOfEnemy += 1;
                 uniqueFormCounter++;
             }

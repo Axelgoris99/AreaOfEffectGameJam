@@ -8,7 +8,7 @@ public class Launch : MonoBehaviour
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            SceneManager.LoadScene("ShooterDev");
+            SceneManager.LoadScene("Lvl0");
         }
     }
 
