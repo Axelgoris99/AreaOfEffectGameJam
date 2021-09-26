@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Hero : MonoBehaviour
 {
+    AudioSource explode;
     [SerializeField]
     private GameObject gameManager;
     
@@ -24,8 +25,22 @@ public class Hero : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        AudioSource[] explosions = GetComponents<AudioSource>();
+        foreach(AudioSource audio in explosions)
+        {
+            if(audio.clip.name == "PlayerExplosion")
+            {
+                explode = audio;
+                break;
+            }
+        }
+    }
+
     public void EndGame()
     {
+        explode.Play();
         print("Perdu");
     }
 

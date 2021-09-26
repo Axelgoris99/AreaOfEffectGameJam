@@ -8,6 +8,19 @@ public class fire : MonoBehaviour
     GameObject ammo;
     float heat;
     bool overHeat;
+    AudioSource laserBeam;
+    void Start()
+    {
+        AudioSource[] lasers = GetComponents<AudioSource>();
+        foreach (AudioSource audio in lasers)
+        {
+            if (audio.clip.name == "laser_15")
+            {
+                laserBeam = audio;
+                break;
+            }
+        }
+    }
     // Update is called once per frame
     private void OnEnable()
     {
@@ -57,6 +70,7 @@ public class fire : MonoBehaviour
                     newAmmo = Instantiate(ammo, transform.position + transform.rotation * new Vector3(-0.5f, 0.975f, 0f) , transform.rotation);
                 }
                 newAmmo.SetActive(true);
+                laserBeam.Play();
                 rightCanon = !rightCanon;
                 heat += 0.1f;
                 yield return new WaitForSeconds(0.1f);

@@ -17,6 +17,10 @@ public class Signs : MonoBehaviour
 
     [SerializeField]
     private string signName;
+
+    [SerializeField]
+    private AudioClip explosionSound;
+    AudioSource explosion;
     public int Health
     {
         get { return health; }
@@ -57,11 +61,21 @@ public class Signs : MonoBehaviour
         {
             spawnCount = GameObject.FindGameObjectWithTag("Spawn").GetComponent<spawnEnemy>();
         }
+        explosion = gameObject.AddComponent<AudioSource>();
+        explosion.playOnAwake = false;
+        explosion.clip = explosionSound;
     }
 
     public void DestructionSign() {
         capturedSigns.Add(this);
         spawnCount.NbOfEnemy = spawnCount.NbOfEnemy - 1;
+        explosion.Play();
+        StartCoroutine(Destruction());
+    }
+    IEnumerator Destruction()
+    {
+        //yield return new WaitWhile(() =>explosion.isPlaying );
+        yield return new WaitForSeconds(0.2f);
         Destroy(gameObject);
     }
 }
