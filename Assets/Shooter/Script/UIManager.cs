@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 public class UIManager : MonoBehaviour
 {
+    public GameObject defeat;
+    public GameObject shooter;
     [Header("Health")]
     [SerializeField]
     private TextMeshProUGUI healthText;
@@ -34,6 +36,16 @@ public class UIManager : MonoBehaviour
         nbOfSignCollected.text = currentNbOfPieces.ToString();
     }
 
+    public void Continue() {
+        heroStat.SetHealth(3);
+        heroStat.colli = true;
+        Time.timeScale = 1;
+        timePass.timePassed += 60;
+        shooter.SetActive(true);
+        defeat.SetActive(false);
+    }
+
+
     IEnumerator UpdateUI()
     {
         while (true)
@@ -51,6 +63,12 @@ public class UIManager : MonoBehaviour
             {
                 actualHealth = heal;
                 healthText.text = heal.ToString();
+            }
+            if (actualHealth == 0)
+            {
+                Time.timeScale = 0;
+                shooter.SetActive(false);
+                defeat.SetActive(true);
             }
         }
     }
