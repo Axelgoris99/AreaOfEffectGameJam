@@ -12,6 +12,8 @@ public class ScreenshotCamera : MonoBehaviour
     private int fullLetterPixels;
     private float percentageCovered = 0;
     public Texture2D textureScreen2;
+    [SerializeField]
+    private SliderPercentage sliderScript;
     private void Awake()
     {
         camera = GetComponent<Camera>();
@@ -91,6 +93,8 @@ public class ScreenshotCamera : MonoBehaviour
             }
         }
         percentageCovered = 1f - (float)actualLetterPixels / (float)fullLetterPixels;
+
+        sliderScript.UpdateSliderValue(percentageCovered);
         Debug.Log("actual white pixels = " + actualLetterPixels);
         Debug.Log("percentage covered " + percentageCovered);
         yield return null;
