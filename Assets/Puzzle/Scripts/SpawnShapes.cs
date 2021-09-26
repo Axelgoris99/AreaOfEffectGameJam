@@ -21,13 +21,13 @@ public class SpawnShapes : MonoBehaviour
     {
         foreach(Signs sign in collectedShapes)
         {
-            if(inventaire.ContainsKey(sign.name))
+            if(inventaire.ContainsKey(sign.SignName))
             {
-                inventaire[sign.name] += 1;
+                inventaire[sign.SignName] += 1;
             }
             else
             {
-                inventaire.Add(sign.name, 1);
+                inventaire.Add(sign.SignName, 1);
             }
         }
     }
@@ -70,7 +70,7 @@ public class SpawnShapes : MonoBehaviour
             GameObject newShape = Instantiate(forme.gameObject, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, (Camera.main.transform.position.y - 0.25f))), Quaternion.identity, null);
 
             //décompte de l'inventaire
-            inventaire[forme.name] -= 1;
+            inventaire[forme.SignName] -= 1;
 
             previousShape = newShape;
         }
@@ -81,8 +81,8 @@ public class SpawnShapes : MonoBehaviour
         if (!Manipulation.AnObjectIsHold)
         {
             TMP_Text text = button.transform.GetComponentInChildren<TMP_Text>();
-            text.text = "x " + inventaire[formeButton.name];
-            if (inventaire[formeButton.name] <= 0)
+            text.text = "x " + inventaire[formeButton.SignName];
+            if (inventaire[formeButton.SignName] <= 0)
             {
                 button.interactable = false;
             }
