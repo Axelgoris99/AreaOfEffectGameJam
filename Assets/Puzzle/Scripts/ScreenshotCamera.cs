@@ -70,7 +70,7 @@ public class ScreenshotCamera : MonoBehaviour
             {
                 actualLetterPixels += 1;
             }
-            else if (col.r < 0.01 && col.g < 0.01 && col.b < (65f / 256f + 0.05f) && col.b > (65f / 256f - 0.05f))
+            else if (col.r < 0.5 && col.g < 0.5 && col.b > 0.2f)
             {
                 actualBackPixels += 1;
             }
@@ -112,7 +112,7 @@ public class ScreenshotCamera : MonoBehaviour
             {
                 fullLetterPixels += 1;
             }
-            else if (col.r < 0.01 && col.g < 0.01 && col.b < (65f/256f +0.05f) && col.b > (65f / 256f - 0.05f))
+            else if (col.r < 0.5 && col.g < 0.5 && col.b > 0.2f)
             {
                 fullBackPixels += 1;
             }

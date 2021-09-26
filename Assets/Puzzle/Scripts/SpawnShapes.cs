@@ -14,6 +14,8 @@ public class SpawnShapes : MonoBehaviour
     public Dictionary<string, Button> buttons = new Dictionary<string, Button>();
     private Signs formeButton;
     private GameObject previousShape;
+    [SerializeField]
+    private List<Button> buttonsList = new List<Button>();
 
     private void Awake()
     {
@@ -33,7 +35,18 @@ public class SpawnShapes : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        foreach(Button but in buttonsList)
+        {
+            TMP_Text text = but.transform.GetComponentInChildren<TMP_Text>();
+            char[] chart = new char[1];
+            chart[0] = ' ';
+            string mot = but.gameObject.name.Split(chart)[0];
+            text.text = "x " + inventaire[mot];
+            if (inventaire[but.name] <= 0)
+            {
+                but.interactable = false;
+            }
+        }
     }
 
     // Update is called once per frame
