@@ -12,11 +12,15 @@ public class Manipulation : MonoBehaviour
     public static bool AnObjectIsHold;
     private float limitPenetration = 0.1f;
     private bool isIntersecting = false;
+    [SerializeField]
+    private ScreenshotCamera scriptCalculWhite;
     
     private void Awake()
     {
         material = GetComponent<Renderer>().material;
         originalColor = material.color;
+
+        scriptCalculWhite = GameObject.Find("Camera").GetComponent<ScreenshotCamera>();  
 
         if(mainCamera==null)
         {
@@ -62,6 +66,7 @@ public class Manipulation : MonoBehaviour
                 StopCoroutine("FollowMouse");
                 isClicked = false;
                 AnObjectIsHold = false;
+                scriptCalculWhite.takeScreenshot = true; //à remplacer par un accesseur plutôt
             }
         }
     }

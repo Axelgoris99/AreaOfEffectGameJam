@@ -90,8 +90,9 @@ public class ScreenshotCamera : MonoBehaviour
                 actualLetterPixels += 1;
             }
         }
-        percentageCovered = 1f - actualLetterPixels / fullLetterPixels;
+        percentageCovered = 1f - (float)actualLetterPixels / (float)fullLetterPixels;
         Debug.Log("actual white pixels = " + actualLetterPixels);
+        Debug.Log("percentage covered " + percentageCovered);
         yield return null;
     }
 
@@ -129,4 +130,9 @@ public class ScreenshotCamera : MonoBehaviour
         RenderTexture.active = null;
         yield return null;
     }
+
+    public float GetPercentage()
+    {
+        return percentageCovered;
+    }    
 }
