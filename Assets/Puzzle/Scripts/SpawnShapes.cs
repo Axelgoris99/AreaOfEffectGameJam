@@ -80,7 +80,7 @@ public class SpawnShapes : MonoBehaviour
     {
         if (!Manipulation.AnObjectIsHold)
         {
-            TMP_Text text = button.transform.GetComponentInChildren<TMP_Text>();
+            TMP_Text text = button.transform.GetChild(0).GetComponent<TMP_Text>();
             text.text = "x " + inventaire[formeButton.SignName];
             if (inventaire[formeButton.SignName] <= 0)
             {
