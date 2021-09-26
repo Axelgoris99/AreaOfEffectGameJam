@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SpawnShapes : MonoBehaviour
 {
@@ -66,7 +67,7 @@ public class SpawnShapes : MonoBehaviour
     {
         if (!Manipulation.AnObjectIsHold)
         {
-            Text text = button.transform.GetComponentInChildren<Text>();
+            TMP_Text text = button.transform.GetComponentInChildren<TMP_Text>();
             text.text = "x " + inventaire[formeButton.name];
             if (inventaire[formeButton.name] <= 0)
             {
