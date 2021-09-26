@@ -50,9 +50,9 @@ public class spawnEnemy : MonoBehaviour
 
         for(int i = 0; i < 100; i++)
         {
-            Vector3 spawnLeft = new Vector3(Random.Range(-15f, -14f), Random.Range(1f, 10f), 0);
-            Vector3 spawnRight = new Vector3(Random.Range(14f, 15f), Random.Range(1f, 10f), 0);
-            Vector3 spawnUp = new Vector3(Random.Range(-15f, 15f), Random.Range(10f, 11f), 0);
+            Vector3 spawnLeft = new Vector3(Random.Range(-14f, -13f), Random.Range(2f, 9f), 0);
+            Vector3 spawnRight = new Vector3(Random.Range(13f, 14f), Random.Range(2f, 9f), 0);
+            Vector3 spawnUp = new Vector3(Random.Range(-14f, 14f), Random.Range(9f, 10f), 0);
             possibleSpawnPoint.Add(spawnLeft);
             possibleSpawnPoint.Add(spawnRight);
             possibleSpawnPoint.Add(spawnUp);

@@ -78,6 +78,8 @@ public class moveAI : MonoBehaviour
             newDirection = aimContext.DecidedDirection;
         }
         transform.position = Vector3.MoveTowards(transform.position, transform.position + newDirection, speed * Time.deltaTime);
+
+        transform.up = newDirection;
         oldDirection = newDirection;
     }
     private void OnTriggerEnter(Collider other)

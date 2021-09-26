@@ -5,6 +5,7 @@ using UnityEngine;
 public class Signs : MonoBehaviour
 {
     public static List<Signs> capturedSigns = new List<Signs>();
+
     public static spawnEnemy spawnCount;
     [SerializeField]
     private int health;

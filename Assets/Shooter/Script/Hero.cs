@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class Hero : MonoBehaviour
 {
     [SerializeField]
@@ -9,7 +9,8 @@ public class Hero : MonoBehaviour
     AudioSource explode;
     [SerializeField]
     private GameObject gameManager;
-    
+
+    public bool colli;
     [SerializeField]
     private int health;
     public int Health
@@ -21,6 +22,7 @@ public class Hero : MonoBehaviour
     public void SetHealth(int value)
     {
         health = Mathf.Max(value, 0);
+        
         if (health == 0)
         {
             EndGame();
@@ -38,8 +40,7 @@ public class Hero : MonoBehaviour
                 break;
             }
         }
-
-
+        colli = true;
     }
 
     public void EndGame()
@@ -48,10 +49,17 @@ public class Hero : MonoBehaviour
         print("Perdu");
     }
 
+    IEnumerator Invincible()
+    {
+        colli = false;
+        yield return new WaitForSeconds(3f);
+        colli = true;
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if(other.gameObject.layer == LayerMask.NameToLayer("Enemy") && colli)
         {
+            StartCoroutine(Invincible());
             SetHealth(health - 1);
             system.Play();
         }
