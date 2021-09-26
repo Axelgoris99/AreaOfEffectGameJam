@@ -10,10 +10,14 @@ public class ScreenshotCamera : MonoBehaviour
     public RenderTexture actualLetterScreen;
     private Color[] actualPixelsTable;
     private int fullLetterPixels;
+    private int fullBackPixels;
     private float percentageCovered = 0;
+    private float percentageOut = 0;
     public Texture2D textureScreen2;
     [SerializeField]
-    private SliderPercentage sliderScript;
+    private SliderPercentage sliderCompletionScript;
+    [SerializeField]
+    private SliderPercentage sliderOverrunScript;
     private void Awake()
     {
         camera = GetComponent<Camera>();
@@ -44,32 +48,6 @@ public class ScreenshotCamera : MonoBehaviour
         {            
             takeScreenshot = false;
             StartCoroutine("ProcessPhoto");
-            //actualLetterScreen = new Texture2D(Screen.width, Screen.height);
-            ////actualLetterScreen.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-            ////actualLetterScreen.Apply();
-            //camera.targetTexture = actualLetterScreen;
-
-            ////get and count pixels :
-            //actualPixelsTable = actualLetterScreen.GetPixels(0, 0, actualLetterScreen.width, actualLetterScreen.height);
-
-            //textureScreen2 = new Texture2D(actualLetterScreen.width, actualLetterScreen.height);
-            //Rect rectReadPicture = new Rect(0, 0, actualLetterScreen.width, actualLetterScreen.height);
-            //RenderTexture.active = actualLetterScreen;            
-            //textureScreen2.ReadPixels(rectReadPicture, 0, 0);
-            //textureScreen2.Apply();
-
-            //actualPixelsTable = textureScreen2.GetPixels(0, 0, actualLetterScreen.width, actualLetterScreen.height);
-
-            //int actualLetterPixels = 0;
-            //foreach (Color col in actualPixelsTable)
-            //{
-            //    if (col.r > 0.9 && col.g > 0.9 && col.b > 0.9)
-            //    {
-            //        actualLetterPixels += 1;
-            //    }
-            //}
-            //percentageCovered = 1f - actualLetterPixels / fullLetterPixels;
-            //Debug.Log("actual white pixels = "+actualLetterPixels);
         }
                 
     }
@@ -85,18 +63,26 @@ public class ScreenshotCamera : MonoBehaviour
         actualPixelsTable = textureScreen2.GetPixels(0, 0, actualLetterScreen.width, actualLetterScreen.height);
 
         int actualLetterPixels = 0;
+        int actualBackPixels = 0;
         foreach (Color col in actualPixelsTable)
         {
             if (col.r > 0.9 && col.g > 0.9 && col.b > 0.9)
             {
                 actualLetterPixels += 1;
             }
+            else if (col.r < 0.01 && col.g < 0.01 && col.b < (65f / 256f + 0.05f) && col.b > (65f / 256f - 0.05f))
+            {
+                actualBackPixels += 1;
+            }
         }
         percentageCovered = 1f - (float)actualLetterPixels / (float)fullLetterPixels;
+        percentageOut = 1f - (float)actualBackPixels / (float)fullBackPixels;
 
-        sliderScript.UpdateSliderValue(percentageCovered);
+        sliderCompletionScript.UpdateSliderValue(percentageCovered);
+        sliderOverrunScript.UpdateSliderValue(percentageOut);
+
         Debug.Log("actual white pixels = " + actualLetterPixels);
-        Debug.Log("percentage covered " + percentageCovered);
+        Debug.Log("back pixels "+fullBackPixels);
         yield return null;
     }
 
@@ -106,12 +92,9 @@ public class ScreenshotCamera : MonoBehaviour
         emptyLetterScreen = new RenderTexture(Screen.width, Screen.height, (int)camera.depth);
         camera.targetTexture = emptyLetterScreen;
         camera.Render();
-        //emptyLetterScreen = new Texture2D(Screen.width, Screen.height);
-        //emptyLetterScreen.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-        //emptyLetterScreen.Apply();
 
         Texture2D textureScreen = new Texture2D(emptyLetterScreen.width, emptyLetterScreen.height);
-        Rect rectReadPicture = new Rect(0, 0, emptyLetterScreen.width, emptyLetterScreen.height);
+        Rect rectReadPicture = new Rect(0, 0, emptyLetterScreen.width-1, emptyLetterScreen.height-1);
         RenderTexture.active = emptyLetterScreen;
 
         yield return new WaitForSeconds(0.5f);
@@ -121,14 +104,20 @@ public class ScreenshotCamera : MonoBehaviour
         actualPixelsTable = textureScreen.GetPixels(0, 0, emptyLetterScreen.width, emptyLetterScreen.height);
 
         fullLetterPixels = 0;
+        fullBackPixels = 0;
         foreach (Color col in actualPixelsTable)
         {
             if (col.r > 0.9 && col.g > 0.9 && col.b > 0.9)
             {
                 fullLetterPixels += 1;
             }
+            else if (col.r < 0.01 && col.g < 0.01 && col.b < (65f/256f +0.05f) && col.b > (65f / 256f - 0.05f))
+            {
+                fullBackPixels += 1;
+            }
         }
         Debug.Log("total white pixels letter = " + fullLetterPixels);
+        Debug.Log("total back blue pixels " + fullBackPixels);
         //RenderTexture.active = null;
         camera.enabled = false;
         RenderTexture.active = null;

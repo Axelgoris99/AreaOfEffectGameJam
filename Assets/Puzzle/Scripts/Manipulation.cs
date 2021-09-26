@@ -69,6 +69,10 @@ public class Manipulation : MonoBehaviour
                 scriptCalculWhite.takeScreenshot = true; //à remplacer par un accesseur plutôt
             }
         }
+        if(Input.GetKeyDown(KeyCode.R) && isClicked)
+        {
+            transform.Rotate(Vector3.up, 45f);
+        }
     }
 
     private void OnMouseExit()

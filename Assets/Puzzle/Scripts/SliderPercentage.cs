@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SliderPercentage : MonoBehaviour
 {
     [SerializeField]
-    private ScreenshotCamera cameraScript;
+    private ScreenshotCamera cameraScriptCalcul;
     private Slider m_slider;
     private void Awake()
     {
