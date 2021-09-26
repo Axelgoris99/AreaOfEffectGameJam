@@ -33,7 +33,7 @@ public class Signs : MonoBehaviour
     
     public void SetHealth(int value)
     {
-        health = Mathf.Max(value, 0);
+        health = value;
         if(health == 0)
         {
             DestructionSign();
