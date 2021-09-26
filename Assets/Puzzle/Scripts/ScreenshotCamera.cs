@@ -109,7 +109,7 @@ public class ScreenshotCamera : MonoBehaviour
         Rect rectReadPicture = new Rect(0, 0, emptyLetterScreen.width, emptyLetterScreen.height);
         RenderTexture.active = emptyLetterScreen;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         textureScreen.ReadPixels(rectReadPicture, 0, 0);
         textureScreen.Apply();
 
