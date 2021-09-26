@@ -65,10 +65,10 @@ public class fire : MonoBehaviour
                 GameObject newAmmo;
                 if (rightCanon)
                 {
-                    newAmmo = Instantiate(ammo, transform.position + transform.rotation * new Vector3(0.5f, 0.975f, 0f), transform.rotation);
+                    newAmmo = Instantiate(ammo, transform.position + transform.rotation * new Vector3(0.17f, 1.4f, 0f), transform.rotation);
                 }
                 else {
-                    newAmmo = Instantiate(ammo, transform.position + transform.rotation * new Vector3(-0.5f, 0.975f, 0f) , transform.rotation);
+                    newAmmo = Instantiate(ammo, transform.position + transform.rotation * new Vector3(-0.09f, 1.4f, 0f) , transform.rotation);
                 }
                 newAmmo.SetActive(true);
                 laserBeam.Play();
