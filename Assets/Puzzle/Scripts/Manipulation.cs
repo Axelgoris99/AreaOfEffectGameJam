@@ -40,9 +40,13 @@ public class Manipulation : MonoBehaviour
         
     }
 
-    private void OnMouseOver()
+    private void OnMouseEnter()
     {
         material.color = Color.yellow;
+    }
+
+    private void OnMouseOver()
+    {        
         //Debug.Log(Input.mousePosition);
         //Debug.Log("world" + mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 4)));
         if(Input.GetMouseButtonDown(0))
@@ -81,29 +85,29 @@ public class Manipulation : MonoBehaviour
         }        
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        List<ContactPoint> listPoints = new List<ContactPoint>();
-        float interdistance = 0f;
-        collision.GetContacts(listPoints);
-        Debug.Log("nbre points collision "+listPoints.Count);
-        foreach(ContactPoint contact in listPoints)
-        {
-            Debug.Log(contact.separation);
-            if (contact.separation < interdistance)
-            {
-                interdistance = contact.separation;
-            }
-        }
-        if(-interdistance > limitPenetration)
-        {
-            material.color = Color.red;
-        }
-    }
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    List<ContactPoint> listPoints = new List<ContactPoint>();
+    //    float interdistance = 0f;
+    //    collision.GetContacts(listPoints);
+    //    Debug.Log("nbre points collision "+listPoints.Count);
+    //    foreach(ContactPoint contact in listPoints)
+    //    {
+    //        Debug.Log(contact.separation);
+    //        if (contact.separation < interdistance)
+    //        {
+    //            interdistance = contact.separation;
+    //        }
+    //    }
+    //    if(-interdistance > limitPenetration)
+    //    {
+    //        material.color = Color.red;
+    //    }
+    //}
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.bounds.Intersects(this.GetComponent<Collider>().bounds))
+        if (!(other.tag=="Letter") && other.bounds.Intersects(this.GetComponent<Collider>().bounds))
         {
             material.color = Color.red;
             isIntersecting = true;
@@ -112,14 +116,17 @@ public class Manipulation : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        isIntersecting = false;
-        if(isClicked)
+        if (!(other.tag == "Letter"))
         {
-            material.color = Color.yellow;
-        }
-        else
-        {
-            material.color = originalColor;
+            isIntersecting = false;
+            if (isClicked)
+            {
+                material.color = Color.yellow;
+            }
+            else
+            {
+                material.color = originalColor;
+            }
         }
     }
 }
